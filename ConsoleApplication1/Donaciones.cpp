@@ -163,8 +163,7 @@ void obtenerCampaniasDisponibles(sqlite3* db) {
         std::time_t ahora = std::time(nullptr);
         int diasRestantes = static_cast<int>((fechaFinT - ahora) / (60 * 60 * 24));
 
-        std::cout << "ID: " << id << ", Nombre: " << nombre << ", Descripción: " << descripcion
-            << ", Objetivo: " << objetivo << ", Recaudado: " << recaudado
+        std::cout << "ID: " << id << ", Nombre: " << nombre << ", Descripción: " << descripcion   << ", Objetivo: " << objetivo << ", Recaudado: " << recaudado
             << ", Días Restantes: " << diasRestantes << std::endl;
     }
     sqlite3_finalize(stmt);
@@ -175,8 +174,7 @@ void actualizarMontoRecaudado(sqlite3* db, int idCampania, double monto) {
     std::lock_guard<std::mutex> lock(dbMutex);
 
     std::ostringstream sqlActualizarCampania;
-    sqlActualizarCampania << "UPDATE campanias SET recaudado = recaudado + " << monto
-        << " WHERE id = " << idCampania << ";";
+    sqlActualizarCampania << "UPDATE campanias SET recaudado = recaudado + " << monto << " WHERE id = " << idCampania << ";";
 
     char* mensajeError;
     int resultado = sqlite3_exec(db, sqlActualizarCampania.str().c_str(), 0, 0, &mensajeError);
